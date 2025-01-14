@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 function Header() {
@@ -9,14 +10,14 @@ function Header() {
           <nav>
             <ul className="flex gap-4">
               <li>
-                <a href="/" className="hover:underline">
+                <Link href="/" className="hover:underline">
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/products" className="hover:underline">
+                <Link href="/products" className="hover:underline">
                   Products
-                </a>
+                </Link>
               </li>
             </ul>
           </nav>

@@ -31,8 +31,13 @@ const ProductPage = () => {
         }
         const result = await response.json();
         setProduct(result);
-      } catch (err: any) {
-        setError(err.message);
+      } catch (err: unknown) {  // Use unknown type for error
+        // Check if the error is an instance of Error
+        if (err instanceof Error) {
+          setError(err.message);  // Access the message property of the Error object
+        } else {
+          setError("An unknown error occurred");
+        }
       } finally {
         setLoading(false);
       }

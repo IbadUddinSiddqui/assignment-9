@@ -1,6 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
+
 interface Product {
   id: number;
   title: string;
@@ -15,8 +17,8 @@ interface Product {
 }
 
 const HomePage = () => {
-  const [data, setData] = useState<Product[] | null>(null); 
-  const [error, setError] = useState(null);
+  const [data, setData] = useState<Product[] | null>(null);
+  const [error, setError] = useState<string | null>(null);  // Error is typed as string | null
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -31,13 +33,18 @@ const HomePage = () => {
 
         const res = await result.json();
         setData(res);
-      } catch (err: any) {
-        setError(err.message);
+      } catch (err: unknown) {  // Use unknown type for error
+        // Check if the error is an instance of Error
+        if (err instanceof Error) {
+          setError(err.message);  // Access the message property of the Error object
+        } else {
+          setError("An unknown error occurred");
+        }
       } finally {
         setLoading(false);
       }
     };
-    
+
     fetchData();
   }, []);  // Empty dependency array ensures this runs only once when the component mounts.
 
@@ -64,12 +71,12 @@ const HomePage = () => {
           <p className="text-lg mb-6">
             Explore the best products at unbeatable prices. Shop now and enjoy fast delivery!
           </p>
-          <a
+          <Link
             href="/products"
             className="bg-white text-blue-600 px-6 py-3 rounded-lg font-medium shadow-lg hover:bg-gray-100 transition duration-300"
           >
             Shop Now
-          </a>
+          </Link>
         </div>
       </section>
 
@@ -81,7 +88,7 @@ const HomePage = () => {
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
             {/* Displaying only the first 4 products */}
-            {data && data.slice(0, 4).map((product: any) => (
+            {data && data.slice(0, 4).map((product) => (
               <div
                 key={product.id}
                 className="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
@@ -94,12 +101,12 @@ const HomePage = () => {
                 <div className="p-4">
                   <h3 className="text-lg font-semibold mb-2">{product.title}</h3>
                   <p className="text-gray-700 mb-4">${product.price}</p>
-                  <a
+                  <Link
                     href={`/products/${product.id}`}
                     className="block bg-blue-600 text-white text-center py-2 rounded hover:bg-blue-500 transition-colors"
                   >
                     View Product
-                  </a>
+                  </Link>
                 </div>
               </div>
             ))}

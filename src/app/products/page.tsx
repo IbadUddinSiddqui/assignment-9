@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 
+
 interface Products {
   id: number;
   title: string;
@@ -13,7 +14,7 @@ interface Products {
 const ProductsPage = () => {
   const [data, setData] = useState<Products[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+ 
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,9 +25,7 @@ const ProductsPage = () => {
         }
         const result = await response.json();
         setData(result);
-      } catch (err: any) {
-        setError(err.message);
-      } finally {
+      }  finally {
         setLoading(false);
       }
     };
@@ -45,13 +44,7 @@ const ProductsPage = () => {
     );
   }
 
-  if (error) {
-    return (
-      <div className="bg-gray-100 text-red-500 min-h-screen flex items-center justify-center">
-        <p>Error: {error}</p>
-      </div>
-    );
-  }
+ 
 
   return (
     <div className="bg-gradient-to-b mt-24 from-blue-50 to-white text-gray-800 p-8">
