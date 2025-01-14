@@ -99,7 +99,7 @@ const HomePage = () => {
                 className="w-full h-60 object-contain mb-4 rounded"
               />
                 <div className="p-4">
-                  <h3 className="text-lg font-semibold mb-2">{product.title}</h3>
+                  <h3 className="text-lg font-semibold mb-2 dark:text-black">{product.title}</h3>
                   <p className="text-gray-700 mb-4">${product.price}</p>
                   <Link
                     href={`/products/${product.id}`}
